@@ -2,6 +2,12 @@
 
 ![](healthcare.jpg)
 
+_Disclaimer
+This project uses a synthetic healthcare dataset created for educational purposes only. The data is entirely fictional and does not represent real patient information. It is used to showcase technical skills in data analysis, business intelligence, and big data applications. Real healthcare data is subject to strict privacy regulations and ethical considerations, which is why synthetic data is used here to avoid privacy concerns. The insights and recommendations are based on simulated data and serve to demonstrate my proficiency in data science methodologies._
+
+---
+
+
 ## Project Overview
 This project analyzes **synthetic** healthcare data to derive actionable insights, optimize resource allocation, and improve hospital operations. The analysis focuses on patient demographics, billing trends, satisfaction scores, revisit flags, and other key metrics. By simulating real-world scenarios with added **skewness** and **noise**, the project demonstrates technical proficiency, business intelligence, and the ability to solve real-world problems.
 
@@ -71,12 +77,19 @@ print(df.head())
 _This code adjusts the Billing Amount, Length of Stay, and Satisfaction Score based on factors like patient age and medical conditions. It also modifies the Revisit Flag for chronic conditions and introduces some random noise to make the data more realistic, simulating real-world variations in healthcare billing and patient stay_
 
 Link to Full Python Project here: https://github.com/Michael-Otebola/Healthcare-Data-Analysis-Project/blob/47bf7fbf3ffeaeab53e0c9ef1166f0dd191409a9/Improving%20Patient%20Outcomes%20through%20Data%20Analysis.ipynb
+
 ---
 
 #### 3. Exploratory Data Analysis (EDA)
 **1. Billing Trends:**
 - Older patients have higher billing amounts, often due to extended stays and complex care needs.
 - Recommendation: Develop cost-effective care programs for aging populations.
+
+  ![](BiilingVSAge.PNG)
+
+_Figure 1: A scatter plot showing the relationship between patient Age and Billing Amount, indicating that older patients incur higher billing costs._
+
+---
 
 **2. Length of Stay:**
 - Chronic conditions (e.g., Cancer, Heart Disease) result in the longest stays, while acute conditions (e.g., Flu) are resolved quickly.
@@ -91,11 +104,15 @@ Link to Full Python Project here: https://github.com/Michael-Otebola/Healthcare-
 - Flu patients also revisit frequently, likely due to seasonal outbreaks.
 - Recommendation: Strengthen follow-up care for chronic and acute conditions
 
+
 **5. Prevalence and Severity:**
 - Common conditions: Hypertension and Asthma.
 - Resource-intensive conditions: Cancer and Heart Disease.
 - Recommendation: Focus preventive care on common conditions and allocate specialized resources to severe cases.
 
+  ![](PrevalenceMedicalCondition.PNG)
+
+_Fig. 2 A Bar Chart Showing the Severity of Medical Condition_
 
 #### 4. Statistical Insights
 - Correlation analysis revealed key relationships, such as the negative impact of Length of Stay on Satisfaction Scores.

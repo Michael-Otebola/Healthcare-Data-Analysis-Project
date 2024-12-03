@@ -29,6 +29,50 @@ Key features of the dataset include:
 - Added skewness and noise to variables like Length of Stay and Billing Amount to mimic real-world inconsistencies.
 - Adjusted values based on patient age and medical condition to reflect plausible billing and resource scenarios.
 
+**_Python Code & EDA Snippet_**
+ 
+  ```
+  import numpy as np
+
+# Mapping conditions for the new structure
+conditions = ['Asthma', 'Cancer', 'Diabetes', 'Flu', 'Heart Disease', 'Hypertension', 'Obesity']
+
+# Age-Based Adjustments
+df['Billing Amount'] = df['Billing Amount'] + df['Age'] * 50  # Older patients billed more
+df['Length of Stay'] = df['Length of Stay'] + np.where(df['Age'] > 50, 2, 0)  # Longer stay for older patients
+
+# Condition-Based Adjustments (use the 'Medical Condition' column)
+for condition in conditions:
+    # Apply adjustments based on the medical condition
+    df['Billing Amount'] = np.where(df['Medical Condition'] == condition, df['Billing Amount'] + 500, df['Billing Amount'])
+    df['Length of Stay'] = np.where(df['Medical Condition'] == condition, df['Length of Stay'] + 3, df['Length of Stay'])
+
+    if condition == 'Flu':
+        df['Billing Amount'] = np.where(df['Medical Condition'] == condition, df['Billing Amount'] - 200, df['Billing Amount'])
+        df['Length of Stay'] = np.where(df['Medical Condition'] == condition, df['Length of Stay'] - 2, df['Length of Stay'])
+
+# Satisfaction Score Adjustments
+df['Satisfaction Score'] = df['Satisfaction Score'] - df['Length of Stay'] * 0.2
+df['Satisfaction Score'] = np.clip(df['Satisfaction Score'], 1, 10)  # Clamp scores between 1 and 10
+
+# Revisit Flag Adjustments
+df['Revisit Flag'] = np.where(
+    (df['Medical Condition'] == 'Asthma') | (df['Medical Condition'] == 'Diabetes'), 1, df['Revisit Flag']
+)  # Chronic conditions lead to revisits
+df['Revisit Flag'] = np.where(df['Medical Condition'] == 'Flu', 0, df['Revisit Flag'])  # Acute conditions less likely
+
+# Add Some Noise to Make It Realistic
+df['Billing Amount'] += np.random.normal(0, 100, size=len(df))
+df['Length of Stay'] += np.random.normal(0, 1, size=len(df))
+
+# Check your data after changes
+print(df.head())
+```
+_This code adjusts the Billing Amount, Length of Stay, and Satisfaction Score based on factors like patient age and medical conditions. It also modifies the Revisit Flag for chronic conditions and introduces some random noise to make the data more realistic, simulating real-world variations in healthcare billing and patient stay_
+
+Link to Full Python Project here: https://github.com/Michael-Otebola/Healthcare-Data-Analysis-Project/blob/47bf7fbf3ffeaeab53e0c9ef1166f0dd191409a9/Improving%20Patient%20Outcomes%20through%20Data%20Analysis.ipynb
+---
+
 #### 3. Exploratory Data Analysis (EDA)
 **1. Billing Trends:**
 - Older patients have higher billing amounts, often due to extended stays and complex care needs.
@@ -56,6 +100,8 @@ Key features of the dataset include:
 #### 4. Statistical Insights
 - Correlation analysis revealed key relationships, such as the negative impact of Length of Stay on Satisfaction Scores.
 - Identified high revisit rates for chronic conditions like Diabetes and Asthma, as well as acute surges for Flu patients.
+
+  
 
  ### Overall Insights and Recommendations
 **1. Billing Trends**
